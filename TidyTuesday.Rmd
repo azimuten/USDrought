@@ -1,3 +1,29 @@
+---
+title: "TidyTuesday"
+author: "AJ"
+date: "2022-09-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
 library(tidyverse)
 library(maps)
 library(mapproj)
@@ -19,8 +45,7 @@ avg_ColonyNum_per_state <- colony %>%
             total_col_n = sum(colony_n, na.rm = TRUE))
 
 #Calculate percentage of lost colony
-avg_ColonyNum_per_state$pct_lost <- (avg_ColonyNum_per_state$total_col_lost / 
-                                       avg_ColonyNum_per_state$total_col_n) * 100
+avg_ColonyNum_per_state$pct_lost <- (avg_ColonyNum_per_state$total_col_lost/avg_ColonyNum_per_state$total_col_n)*100
 
 #Got US state centriods from here: https://developers.google.com/public-data/docs/canonical/states_csv
 install.packages("datapasta")
@@ -134,7 +159,7 @@ library(gganimate)
 install.packages("RColorBrewer")
 library("RColorBrewer")
 
-plot <- ggplot() +
+ggplot() +
   geom_polygon(data = states1, aes(x=long, 
                                   y = lat, 
                                   group = group,
@@ -148,7 +173,7 @@ geom_point(data=avg_ColonyNum_per_state, aes(x=longitude,
                                                  y=latitude, 
                                                  color = pct_lost,
                                                  size = pct_lost
-  ) +
+  )) +
 
   borders("state") +
   scale_colour_viridis_c(trans = "reverse") +
@@ -158,7 +183,11 @@ geom_point(data=avg_ColonyNum_per_state, aes(x=longitude,
        color = "% Bee Colony Lost",
        fill =  "Mean Drought Score",
        size = "% Bee Colony Lost"
-       )) +
-  transition_time(as.integer(year))
+       ) +
+  transition_time(year)
   
-animate(plot, height = 576, width = 800, fps = 4)
+
+
+```
+
+
